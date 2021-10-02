@@ -1,1 +1,1 @@
-# ChanJang-front
+WAP 프로젝트 찬장 입니다.
