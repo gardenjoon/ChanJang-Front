@@ -5,7 +5,7 @@ class FoodScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>test2</Text>
+                <Text>test3</Text>
             </View>
         );
     }
