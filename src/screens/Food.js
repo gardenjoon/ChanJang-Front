@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, FlatList, TouchableOpacity, Image} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
  
 const FoodScreen = () => {
     renderItem=({item})=>{
@@ -19,7 +20,7 @@ const FoodScreen = () => {
     }
 
     const [datas] = useState([
-        {name:"김치", message:"대연1동 · 2021.10.9",img: require('../../assets/kimchi.jpg')},
+        {name:"김치", message:"대연1동 100m · 2021.10.9",img: require('../../assets/kimchi.jpg')},
         {name:"피클", message:"대연동 · 2021.5.9",img: require('../../assets/pickle.jpg')},
         {name:"마파 두부", message:"연산 · 2021.6.9",img: require('../../assets/mafa.jpg')},
         {name:"계란 조림", message:"대연3동 · 2021.7.9",img: require('../../assets/egg.jpg')},
@@ -30,10 +31,10 @@ const FoodScreen = () => {
     ])
 
     return(
-        <View style={style.root}>
+        <SafeAreaView style={style.root}>
             <Text style={style.titleText}>반찬 공유</Text>
             <FlatList
-                // ItemSeparatorComponent={this.itemSeparator}
+                ItemSeparatorComponent={this.itemSeparator}
                 data={datas}
                 renderItem={this.renderItem}>
             </FlatList>
@@ -45,12 +46,16 @@ const FoodScreen = () => {
                         style={style.floatingButtonStyle}
                     />
             </TouchableOpacity>
-        </View>
+        </SafeAreaView>
     );
 }
  
 const style= StyleSheet.create({
-    root:{flex:1, padding:16, },
+    root:{
+        flex:1,
+        paddingHorizontal:16,
+        backgroundColor: 'white'
+    },
     titleText:{
         fontSize:24,
         // fontWeight:'bold',
@@ -60,8 +65,8 @@ const style= StyleSheet.create({
         paddingBottom:16,
         // backgroundColor:'white',
         borderBottomWidth:1,
-        // borderColor:'black',
-        borderColor:'#CED0CE',
+        borderColor:'black',
+        // borderColor:'#CED0CE',
     },
     itemView:{
         flexDirection:'row',
@@ -73,7 +78,7 @@ const style= StyleSheet.create({
         backgroundColor:'white',
     },
     itemImg:{
-        width:120,
+        width:100,
         height:100,
         resizeMode:'cover',
         marginRight:8,
@@ -110,7 +115,7 @@ const style= StyleSheet.create({
         width: 25,
         height: 25,
         tintColor:'white',
-        //backgroundColor:'black'
+        // backgroundColor:'black'
       },
 });
 
