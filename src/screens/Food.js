@@ -1,58 +1,82 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, FlatList, TouchableOpacity, Image} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import axios from 'axios';
  
 const FoodScreen = () => {
-    const renderItem=({item})=>{
-        return(
-            <TouchableOpacity style={style.itemView} onPress={()=>{alert(item.name);}}>
-                <Image source={item.img} style={style.itemImg}></Image>
-                <View style={style.itemMsg}>
-                    <Text style={style.itemName}>{item.name}</Text>
-                    <View style = {style.itemSummary}>
-                        <Text style={style.itemPlace}>{item.place}</Text>
-                        <Text style={style.itemPlace}> • </Text>
-                        <Text  style={style.itemPlace}>{item.distance}</Text>
-                        <Text style={style.itemPlace}> • </Text>
-                        <Text style={style.itemPlace}>{item.date}</Text>
+    const [users, setUsers] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    useEffect(() => {
+        const fetchUsers = async() => {
+            try {
+                setError(null);
+                setUsers(null);
+
+                setLoading(true);
+                const response = await axios.get('https://jsonplaceholder.typicode.com/users');
+                setUsers(response.data);
+            }
+            catch (e) {
+                setError(e);
+            }
+            setLoading(false);
+        }
+        fetchUsers();
+    }, []);
+
+    if (loading) return (
+        <Text>loading...</Text>
+    )
+    if (error) return (
+        <Text>error...</Text>
+    )
+    if(!users) return (
+        <Text>no Users</Text>
+    )
+    else {
+        const renderItem=({item})=>{
+            return(
+                <TouchableOpacity style={style.itemView} onPress={()=>{alert(item.name);}}>
+                    {/* <Image source={item.img} style={style.itemImg}></Image> */}
+                    <View style={style.itemMsg}>
+                        <Text style={style.itemName}>{item.name}</Text>
+                        <View style = {style.itemSummary}>
+                            <Text style={style.itemPlace}>{item.username}</Text>
+                            <Text style={style.itemPlace}> • </Text>
+                            <Text  style={style.itemPlace}>{item.email}</Text>
+                            <Text style={style.itemPlace}> • </Text>
+                            <Text style={style.itemPlace}>{item.id}</Text>
+                        </View>
                     </View>
+                </TouchableOpacity>
+            );
+        }
+    
+        const itemSeparator = () => {
+            return <View style={[style.itemSeparator]} />
+        }
+    
+        return(
+                <View style={style.root}>
+                    <FlatList
+                        ItemSeparatorComponent={itemSeparator}
+                        data={users}
+                        renderItem={renderItem}>
+                    </FlatList>
+                    <TouchableOpacity activeOpacity={0.8} 
+                        onPress={()=>{alert('FAB Clicked')}}
+                        style={style.touchableOpacityStyle}>
+                            <Image
+                                source={require('../../assets/plus.png')}
+                                style={style.floatingButtonStyle}
+                            />
+                    </TouchableOpacity>
                 </View>
-            </TouchableOpacity>
+            
         );
+
     }
 
-    const itemSeparator = () => {
-        return <View style={[style.itemSeparator]} />
-    }
-
-    const [datas] = useState([
-        {name:"김치", place: "대연1동", distance: "100m", date: "2021.10.9", img: require('../../assets/kimchi.jpg')},
-        {name:"피클", place: "대연동", distance: "100m", date: "2021.5.9", img: require('../../assets/pickle.jpg')},
-        {name:"마파 두부", place: "연산", distance: "100m", date: "2021.6.9", img: require('../../assets/mafa.jpg')},
-        {name:"계란 조림", place: "대연3동", distance: "100m", date: "2021.7.9", img: require('../../assets/egg.jpg')},
-        {name:"김치", place: "대연1동", distance: "100m", date: "2021.10.9", img: require('../../assets/kimchi.jpg')},
-        {name:"피클", place: "대연동", distance: "100m", date: "2021.5.9", img: require('../../assets/pickle.jpg')},
-        {name:"마파 두부", place: "연산", distance: "100m", date: "2021.6.9", img: require('../../assets/mafa.jpg')},
-        {name:"계란 조림", place: "대연3동", distance: "100m", date: "2021.7.9", img: require('../../assets/egg.jpg')},
-    ])
-
-    return(
-        <View style={style.root}>
-            <FlatList
-                ItemSeparatorComponent={itemSeparator}
-                data={datas}
-                renderItem={renderItem}>
-            </FlatList>
-            <TouchableOpacity activeOpacity={0.8} 
-                onPress={()=>{alert('FAB Clicked')}}
-                style={style.touchableOpacityStyle}>
-                    <Image
-                        source={require('../../assets/plus.png')}
-                        style={style.floatingButtonStyle}
-                    />
-            </TouchableOpacity>
-        </View>
-    );
 }
  
 const style= StyleSheet.create({
