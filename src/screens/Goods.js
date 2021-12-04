@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, FlatList, TouchableOpacity, Image} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
  
-const FoodScreen = () => {
+const FoodScreen = ({navigation}) => {
     const renderItem=({item})=>{
         return(
             <TouchableOpacity style={style.itemView} onPress={()=>{alert(item.name);}}>
@@ -44,7 +44,7 @@ const FoodScreen = () => {
                 renderItem={renderItem}>
             </FlatList>
             <TouchableOpacity activeOpacity={0.8} 
-                onPress={()=>{alert('FAB Clicked')}}
+                onPress={()=>{navigation.navigate('CreateGoods')}}
                 style={style.touchableOpacityStyle}>
                     <Image
                         source={require('../../assets/plus.png')}
