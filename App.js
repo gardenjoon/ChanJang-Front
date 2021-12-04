@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './src/Login';
 import HomeScreen from './src/Home';
 import CreateFoodScreen from './src/screens/CreateFood';
+import CreateGoodsScreen from './src/screens/CreateGoods';
 
 const Stack = createStackNavigator();
 
@@ -20,7 +21,21 @@ const App = () => {
                     name="CreateFood"
                     component={CreateFoodScreen}
                     options={{
-                      title: '반찬공유 글쓰기',
+                      title: '반찬 공유 글쓰기',
+                      headerStyle: {
+                        backgroundColor: 'white',
+                      },
+                      headerTintColor: 'black',
+                      headerTitleStyle: {
+                        fontWeight: 'bold',
+                      },
+                    }}
+                />
+                <Stack.Screen
+                    name="CreateGoods"
+                    component={CreateGoodsScreen}
+                    options={{
+                      title: '생활용품 공유 글쓰기',
                       headerStyle: {
                         backgroundColor: 'white',
                       },

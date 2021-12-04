@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Alert, Image, TextInput } from 'react-native';
 
-const CreateFoodScreen = ({navigation}) => {
+const CreateGoodsScreen = ({navigation}) => {
   return (
     <View style={styles.root}>
       {/* 사진추가 버튼 */}
@@ -90,4 +90,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateFoodScreen;
+export default CreateGoodsScreen;
